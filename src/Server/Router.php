@@ -7,6 +7,7 @@ use Ratchet\WebSocket\MessageComponentInterface;
 use Ratchet\WebSocket\WsServer;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use App\VideoProcessingHandler;
 
 class Router
 {
@@ -44,7 +45,8 @@ class Router
      */
     public function routes()
     {
-        $this->get('/app/{appKey}', config('websockets.handlers.websocket'));
+        $this->get('/app/{appKey}', VideoProcessingHandler::class); // Manually added for ProjectX
+
         $this->post('/apps/{appId}/events', config('websockets.handlers.trigger_event'));
         $this->get('/apps/{appId}/channels', config('websockets.handlers.fetch_channels'));
         $this->get('/apps/{appId}/channels/{channelName}', config('websockets.handlers.fetch_channel'));
